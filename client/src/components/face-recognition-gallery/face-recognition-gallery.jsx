@@ -1,5 +1,5 @@
 import './face-recognition-gallery.css'
-import Switch from '@material-ui/core/Switch';
+import Switch from '@mui/material/Switch';
 import { useState } from 'react';
 import { MdOutlineArrowBackIosNew } from 'react-icons/md';
 import { FiSettings } from 'react-icons/fi';

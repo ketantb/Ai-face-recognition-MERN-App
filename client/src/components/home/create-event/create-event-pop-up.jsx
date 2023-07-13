@@ -1,6 +1,5 @@
 import { useNavigate } from 'react-router-dom';
 import './create-event-pop-up.css'
-import { RxCross1 } from 'react-icons/rx';
 
 const CreateEventPopup = ({ handleClose }) => {
     const navigate = useNavigate()

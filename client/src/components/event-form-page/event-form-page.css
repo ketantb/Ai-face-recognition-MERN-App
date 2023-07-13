@@ -77,6 +77,7 @@
 .event-form-page-main-data-container {
     width: 90%;
     box-shadow: inset 1px 1px 5px -1px rgba(0, 0, 0, 0.5);
+    padding: 1rem;
     height: 60vh;
     margin: 2rem;
     display: flex;
@@ -93,6 +94,23 @@
     width: 100%;
     font-size: 12px;
     color: rgb(134, 134, 134);
+}
+
+.event-form-page-main-data-container > .images-list{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 15px;
+    height: 100%;
+    overflow-y: auto;
+}
+
+.event-form-page-main-data-container > .images-list > li{
+    list-style: none;
+}
+
+.event-form-page-main-data-container > .images-list > li > img{
+    width: 200px;
 }
 
 .cloud-upload-icon{
@@ -190,6 +208,8 @@
     font-weight: 500;
     border: 3px inset #ffff;
     border-radius: 20px;
+    background-color: #f0f0f0;
+    cursor: pointer;
 }
 
 .delete-event-btn-wrapper{

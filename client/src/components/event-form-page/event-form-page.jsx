@@ -5,8 +5,28 @@ import { ImBin } from 'react-icons/im';
 import { useState } from 'react';
 import { AiOutlineCloudUpload } from 'react-icons/ai';
 import { data } from './configs'
+import dummyImg from '../../assets/fr-gallery-dummyimg.jpg'
+import { Modal, Box } from "@mui/material";
+import AddVideoLinkModal from './add-video-link-modal/add-video-link-modal';
 
 const EventFormPage = () => {
+
+    const style = {
+        position: "absolute",
+        top: "50%",
+        left: "50%",
+        transform: "translate(-50%, -50%)",
+        width: "100%",
+        bgcolor: "#ffff",
+        borderRadius: "3px",
+        boxShadow: 'inset 1px 1px 5px -1px rgba(0,0,0,0.5)',
+        p: 4,
+    };
+
+    const [open, setOpen] = useState(false);
+    const handleOpen = () => setOpen(true);
+    const handleClose = () => setOpen(false);
+
     const [coverPic, setCoverPic] = useState()
     const [inputTagDisplay, setInputTagDisplay] = useState("block")
 
@@ -14,11 +34,12 @@ const EventFormPage = () => {
         <div className="event-form-page-wrapper">
             <section className="event-form-page-header">
                 <div className='event-form-page-header-lb'>
-                    <button>
+                    <input style={{ visibility: 'hidden' }} id='event-form-page-header-lb-add-image' type='file' />
+                    <label className='rounded-btns' htmlFor='event-form-page-header-lb-add-image'>
                         Add Images
-                    </button>
-                    <button>
-                        Create Event
+                    </label>
+                    <button onClick={handleOpen}>
+                        Add Video Link
                     </button>
                 </div>
                 <div className='event-form-page-header-rb'>
@@ -47,10 +68,14 @@ const EventFormPage = () => {
                                 <p>Maximum upload per file size: 20MB</p>
                             </div>
                             :  */}
-                            <div>
-
-                            </div>
-                            {/* } */}
+                        <ul className='images-list'>
+                            {data.map((el, idx) => {
+                                return (
+                                    <li><img src={dummyImg} /></li>
+                                )
+                            })}
+                        </ul>
+                        {/* } */}
                     </div>
                 </section>
                 <section className='rb'>
@@ -100,6 +125,17 @@ const EventFormPage = () => {
                     </div>
                 </section>
             </main>
+            <Modal
+                open={open}
+                onClose={handleClose}
+                aria-labelledby="modal-modal-title"
+                aria-describedby="modal-modal-description"
+                className="create-event-popup-modal"
+            >
+                <Box sx={style}>
+                    <AddVideoLinkModal handleClose={handleClose} />
+                </Box>
+            </Modal>
         </div >
     )
 }

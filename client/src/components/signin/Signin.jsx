@@ -4,7 +4,10 @@ import { Button, Box, TextField } from '@mui/material'
 import { Icon } from 'react-icons-kit'
 import { cross } from 'react-icons-kit/icomoon/cross'
 import { useNavigate } from 'react-router-dom';
+import firebaseApp from './firebase_config'
+import { getAuth, RecaptchaVerifier, signInWithPhoneNumber } from "firebase/auth";
 
+const auth = getAuth(firebaseApp);
 const Signin = () => {
     const navigate = useNavigate()
 
@@ -18,20 +21,44 @@ const Signin = () => {
     const [otp, setOtp] = useState(null)
     const [otpBox, setOtpBox] = useState(false)
 
-
     //HANDLE NEXT AFTER SUCCESSFUL OTP VERIFICATION
     const handleSendOtp = () => {
         console.log(mobileno)
         setOtpBox(true)
-        // console.log(typeof (Number(mobileno)))
+        let countryCode = "+91"
+        let mobileNumber = (Number(countryCode + mobileno))
 
+        // window.recaptchaVerifier = new RecaptchaVerifier('recaptcha-container', {
+        //     'size': 'normal',
+        //     'callback': (response) => {
+        //         // reCAPTCHA solved, allow signInWithPhoneNumber.
+        //         // ...
+        //     },
+        //     'expired-callback': () => {
+        //         // Response expired. Ask user to solve reCAPTCHA again.
+        //         // ...
+        //     }
+        // }, auth);
     }
-
 
     //HANDLE OTP
     const handleNext = () => {
         console.log(otp)
-        navigate('/dashboard-details')
+        // navigate('/dashboard-details')
+        navigate('/home-page')
+        let countryCode = "+91"
+        const phoneNumber = (Number(countryCode + mobileno))
+        // const appVerifier = window.recaptchaVerifier;
+        // signInWithPhoneNumber(auth, phoneNumber, appVerifier)
+        //     .then((confirmationResult) => {
+        //         // SMS sent. Prompt user to type the code from the message, then sign the
+        //         // user in with confirmationResult.confirm(code).
+        //         window.confirmationResult = confirmationResult;
+        //         // ...
+        //     }).catch((error) => {
+        //         // Error; SMS not sent
+        //         // ...
+        //     });
 
     }
 
@@ -96,6 +123,7 @@ const Signin = () => {
                         ) : (null)
                         }
                     </form>
+
                     {otpBox ? (
                         <Box className='sendotpbtn-wrapper'>
                             <Button type='submit' variant="contained" className='btn' onClick={handleNext}>NEXT</Button>

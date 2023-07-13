@@ -7,11 +7,14 @@ import dummyImg from '../../assets/fr-gallery-dummyimg.jpg'
 
 const FaceRecognitionGallery = () => {
   const [form, setForm] = useState({
-    fullEventAccess: false, 
+    fullEventAccess: false, whatsappAccess: false,
+    aiGalleryAccess: false, anyOneFaceSearchAccess: false,
+    clientEmail: false, QRCode: false
   });
 
   const handleChange = (event) => {
     setForm({ ...form, [event.target.name]: event.target.checked });
+    console.log(event.target.name, event.target.checked)
   };
 
   return (
@@ -57,7 +60,7 @@ const FaceRecognitionGallery = () => {
                     <p>Full event access</p>
                     <p>
                       <Switch
-                        checked={form.checkedA}
+                        checked={form.fullEventAccess}
                         onChange={handleChange}
                         name="fullEventAccess"
                         color="primary"
@@ -69,9 +72,9 @@ const FaceRecognitionGallery = () => {
                     <p>Whatsapp access</p>
                       <p>
                         <Switch
-                          checked={form.checkedA}
+                          checked={form.whatsappAccess}
                           onChange={handleChange}
-                          name="checkedA"
+                          name="whatsappAccess"
                           inputProps={{ 'aria-label': 'secondary checkbox' }}
                           color="primary"
                         />
@@ -89,9 +92,9 @@ const FaceRecognitionGallery = () => {
                       </div>
                       <div>
                         <Switch
-                          checked={form.checkedA}
+                          checked={form.aiGalleryAccess}
                           onChange={handleChange}
-                          name="checkedA"
+                          name="aiGalleryAccess"
                           color="primary"
                         />
                       </div>
@@ -105,9 +108,9 @@ const FaceRecognitionGallery = () => {
                       </div>
                       <div>
                         <Switch
-                          checked={form.checkedA}
+                          checked={form.anyOneFaceSearchAccess}
                           onChange={handleChange}
-                          name="checkedA"
+                          name="anyOneFaceSearchAccess"
                           color="primary"
                         />
                       </div>
@@ -126,9 +129,9 @@ const FaceRecognitionGallery = () => {
                 </div>
                 <div>
                   <Switch
-                    checked={form.checkedA}
+                    checked={form.clientEmail}
                     onChange={handleChange}
-                    name="checkedA"
+                    name="clientEmail"
                     color="primary"
                   />
                 </div>
@@ -147,9 +150,9 @@ const FaceRecognitionGallery = () => {
                 </div>
                 <div>
                   <Switch
-                    checked={form.checkedA}
+                    checked={form.QRCode}
                     onChange={handleChange}
-                    name="checkedA"
+                    name="QRCode"
                     color="primary"
                   />
                 </div>

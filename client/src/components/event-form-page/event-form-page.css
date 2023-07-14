@@ -45,7 +45,6 @@
 .event-form-main-container {
     display: flex;
     width: 100%;
-    border: 1px solid green
 }
 
 .event-form-main-container>section:first-child {

@@ -2,14 +2,45 @@ import './event-form-page.css'
 import { FiSettings } from 'react-icons/fi';
 import { CiEdit } from 'react-icons/ci';
 import { ImBin } from 'react-icons/im';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { AiOutlineCloudUpload } from 'react-icons/ai';
 import { data } from './configs'
 import dummyImg from '../../assets/fr-gallery-dummyimg.jpg'
 import { Modal, Box } from "@mui/material";
 import AddVideoLinkModal from './add-video-link-modal/add-video-link-modal';
+import { useSelector } from 'react-redux';
+import axios from '../../helpers/axios'
+import { useParams } from 'react-router-dom';
 
 const EventFormPage = () => {
+    //use params
+    const { eventName, eventId } = useParams();
+    console.log(eventName, eventId)
+    const { createEventData } = useSelector((store) => store.eventPopUP)
+    // console.log(createEventData)
+
+    const [eventData, setEventData] = useState()
+
+    const getEventDetails = async () => {
+        await axios.get(`/event-details/${eventName}/${eventId}`)
+            .then((res) => {
+                console.log('getEventdetails => ', res.data.message)
+                setEventData(res.data.message)
+            })
+            .catch((err) => {
+                console.log(err)
+            })
+    }
+
+    const editEventDetails = async () => {
+        await axios.put(`/edit-event-details/${eventName}/${eventId}`)
+            .then((res) => {
+                console.log(res)
+            })
+            .catch((err) => {
+                console.log(err)
+            })
+    }
 
     const style = {
         position: "absolute",
@@ -23,12 +54,18 @@ const EventFormPage = () => {
         p: 4,
     };
 
+    const [videoLinkArr, setVideoLinkArr] = useState([])
+    console.log(videoLinkArr)
     const [open, setOpen] = useState(false);
     const handleOpen = () => setOpen(true);
     const handleClose = () => setOpen(false);
 
     const [coverPic, setCoverPic] = useState()
     const [inputTagDisplay, setInputTagDisplay] = useState("block")
+
+    useEffect(() => {
+        getEventDetails();
+    }, [])
 
     return (
         <div className="event-form-page-wrapper">
@@ -43,7 +80,9 @@ const EventFormPage = () => {
                     </button>
                 </div>
                 <div className='event-form-page-header-rb'>
-                    <h4>AKSHAY ANGALI</h4>
+                    {/* eventName through redux ==>
+                    <h4>{createEventData.eventName}</h4> */}
+                    <h4>{eventName}</h4>
                     <h4><CiEdit /></h4>
                 </div>
             </section>
@@ -133,7 +172,7 @@ const EventFormPage = () => {
                 className="create-event-popup-modal"
             >
                 <Box sx={style}>
-                    <AddVideoLinkModal handleClose={handleClose} />
+                    <AddVideoLinkModal handleClose={handleClose} videoLinkArr={videoLinkArr} setVideoLinkArr={setVideoLinkArr} />
                 </Box>
             </Modal>
         </div >

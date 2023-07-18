@@ -1,7 +1,12 @@
+import { useState } from 'react';
 import './add-video-link-modal.css'
 import { RxCross1 } from 'react-icons/rx';
 
-const AddVideoLinkModal = ({ handleClose }) => {
+const AddVideoLinkModal = ({ handleClose, videoLinkArr, setVideoLinkArr }) => {
+   const [videoLink, setVideoLink] = useState()
+   const addVideoLink = () => {
+      setVideoLinkArr([...videoLinkArr, videoLink])
+   }
    return (
       <div className='add-video-link-modal-container'>
          {/* <h4><RxCross1 /></h4> */}
@@ -9,10 +14,10 @@ const AddVideoLinkModal = ({ handleClose }) => {
             <label htmlFor='add-video-link-input-tag'>Enter Video Link</label>
          </section>
          <section>
-            <input id='add-video-link-input-tag' type='text' />
+            <input id='add-video-link-input-tag' type='text' name='videoLink' onChange={(e) => setVideoLink(e.target.value)}/>
          </section>
          <section>
-            <button>Add</button>
+            <button onClick={addVideoLink}>Add</button>
          </section>
       </div>
    )

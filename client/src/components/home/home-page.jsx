@@ -5,8 +5,10 @@ import { BsCalendar4Event } from 'react-icons/bs';
 import { Modal, Box } from "@mui/material";
 import CreateEventPopup from './create-event/create-event-pop-up';
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 const HomePage = () => {
+    const navigate = useNavigate()
     const style = {
         position: "absolute",
         top: "50%",
@@ -35,7 +37,7 @@ const HomePage = () => {
                     </button>
                 </div>
                 <div className='home-page-header-rb'>
-                    <button>
+                    <button onClick={()=> navigate('/dashboard-details')}>
                         <span><FiSettings /></span>
                         <span>Dashboard Settings</span>
                     </button>

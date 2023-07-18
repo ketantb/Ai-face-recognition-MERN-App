@@ -16,6 +16,7 @@ app.use(cors())
 //routers
 app.use(require('./routes/newUser'))
 app.use(require('./routes/dashboard-details'))
+app.use(require('./routes/event'))
 
 
 module.exports = app

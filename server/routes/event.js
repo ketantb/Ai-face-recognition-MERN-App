@@ -16,6 +16,18 @@ router.post('/create-event', async (req, res) => {
     }
 })
 
+router.get('/all-events', async (req, res) => {
+    try {
+        const allEvents = await Event.find()
+        console.log(allEvents)
+        res.status(200).json({ success: true, message: allEvents })
+    }
+    catch (err) {
+        console.log(err)
+        res.status(500).json({ success: false })
+    }
+})
+
 router.get('/event-details/:eventName/:eventId', async (req, res) => {
     const { eventId } = (req.params)
     try {

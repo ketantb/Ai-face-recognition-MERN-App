@@ -58,4 +58,26 @@ router.put('/edit-event-details/:eventName/:eventId', async (req, res) => {
     }
 })
 
+router.patch('/update-event-images/:eventId', async (req, res) => {
+    const { eventId } = req.params
+    const newArray = req.body
+
+    // console.log("eventId => ", eventId)
+    console.log(req.body)
+    try {
+        const patchImagesArr = await Event.findByIdAndUpdate(eventId, 
+                                                            { eventImages: newArray }, 
+                                                            { new: true }) // {new: true } added To return the updated document
+        if (!patchImagesArr) {
+            return res.status(404).json({ message: 'Item not found' });
+        }
+        console.log(patchImagesArr)
+        return res.json({success: true, ...patchImagesArr});
+    }
+    catch (error) {
+        console.error('Error updating array:', error);
+        res.status(500).json({ message: 'Server error' });
+    }
+})
+
 module.exports = router;

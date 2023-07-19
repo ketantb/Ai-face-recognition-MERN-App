@@ -2,7 +2,7 @@ import { useState } from 'react';
 import './add-video-link-modal.css'
 import { RxCross1 } from 'react-icons/rx';
 
-const AddVideoLinkModal = ({ handleClose, videoLinkArr, setVideoLinkArr }) => {
+const AddVideoLinkModal = ({ handleCloseVideoLinkModal, videoLinkArr, setVideoLinkArr }) => {
    const [videoLink, setVideoLink] = useState()
    const addVideoLink = () => {
       setVideoLinkArr([...videoLinkArr, videoLink])

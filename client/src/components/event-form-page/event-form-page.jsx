@@ -11,6 +11,7 @@ import AddVideoLinkModal from './add-video-link-modal/add-video-link-modal';
 import { useSelector } from 'react-redux';
 import axios from '../../helpers/axios'
 import { useParams } from 'react-router-dom';
+import AddImageModal from './add-image-modal/add-image-modal';
 
 const EventFormPage = () => {
     //use params
@@ -56,12 +57,26 @@ const EventFormPage = () => {
 
     const [videoLinkArr, setVideoLinkArr] = useState([])
     console.log(videoLinkArr)
-    const [open, setOpen] = useState(false);
-    const handleOpen = () => setOpen(true);
-    const handleClose = () => setOpen(false);
+    const [openVideoLinkModal, setOpenVideoLinkModal] = useState(false);
+    const handleOpenVideoLinkModal = () => setOpenVideoLinkModal(true);
+    const handleCloseVideoLinkModal = () => setOpenVideoLinkModal(false);
+
+    const [imgArr, setImgArr] = useState([])
+    const [imgLinkArr, setImgLinkArr] = useState([])
+    // console.log(imgArr)
+    console.log(imgLinkArr)
+    const [openAddImagesModal, setOpenAddImagesModal] = useState(false);
+    const handleOpenAddImagesModal = () => setOpenAddImagesModal(true);
+    const handleCloseAddImagesModal = () => setOpenAddImagesModal(false);
 
     const [coverPic, setCoverPic] = useState()
     const [inputTagDisplay, setInputTagDisplay] = useState("block")
+
+    const editCoverPage = (e) => {
+        setCoverPic(e.target.files[0])
+        setEventData({ ...eventData, eventCoverPage: URL.createObjectURL(e.target.files[0]) })
+        console.log(URL.createObjectURL(e.target.files[0]))
+    }
 
     useEffect(() => {
         getEventDetails();
@@ -71,11 +86,10 @@ const EventFormPage = () => {
         <div className="event-form-page-wrapper">
             <section className="event-form-page-header">
                 <div className='event-form-page-header-lb'>
-                    <input style={{ visibility: 'hidden' }} id='event-form-page-header-lb-add-image' type='file' />
-                    <label className='rounded-btns' htmlFor='event-form-page-header-lb-add-image'>
+                    <button onClick={handleOpenAddImagesModal}>
                         Add Images
-                    </label>
-                    <button onClick={handleOpen}>
+                    </button>
+                    <button onClick={handleOpenVideoLinkModal}>
                         Add Video Link
                     </button>
                 </div>
@@ -119,20 +133,17 @@ const EventFormPage = () => {
                 </section>
                 <section className='rb'>
                     <div>
-                        <div>
-                            <section style={{ display: coverPic ? "none" : "block" }}>
-                                <div>
-                                    <input id='cover-pic-input' type='file' onChange={(e) => { setCoverPic(e.target.files[0]) }} />
-                                    <label htmlFor='cover-pic-input'> Add cover page 1080 × 1080</label>
-                                </div>
-                            </section>
-                            {coverPic ?
-                                <div className='cover-pic-preview-image-container'>
-                                    <img className='cover-pic-preview-image' src={URL.createObjectURL(coverPic)} />
-                                    <p className='cover-pic-preview-image-dustbinIcon' onClick={() => setCoverPic("")}><ImBin /></p>
-                                </div>
-                                : null}
+                        <div className='cover-pic-preview-image-container'>
+                            {/* <img className='cover-pic-preview-image' src={URL.createObjectURL(coverPic)} /> */}
+                            <img className='cover-pic-preview-image' src={eventData?.eventCoverPage} />
+                            <p className='cover-pic-preview-image-dustbinIcon' onClick={() => setCoverPic("")}>
+                                <input id='cover-pic-input' type='file' onChange={editCoverPage} />
+                                <label htmlFor='cover-pic-input'>change cover page 1080 × 1080</label>
+                            </p>
                         </div>
+                        <button className='rounded-btns'>
+                            change cover page
+                        </button>
                     </div>
                     <div>
                         <textarea className='event-form-edit-textarea'
@@ -164,17 +175,44 @@ const EventFormPage = () => {
                     </div>
                 </section>
             </main>
+
+            {/* Add Image Modal */}
             <Modal
-                open={open}
-                onClose={handleClose}
+                open={openAddImagesModal}
+                onClose={handleCloseAddImagesModal}
+                aria-labelledby="modal-modal-title"
+                aria-describedby="modal-modal-description"
+                className="add-images-popup-modal"
+            >
+                <Box sx={style}>
+                    <AddImageModal
+                        handleCloseAddImagesModal={handleCloseAddImagesModal}
+                        imgArr={imgArr} setImgArr={setImgArr}
+                        imgLinkArr={imgLinkArr}
+                        setImgLinkArr={setImgLinkArr}
+                        eventData={eventData}
+                    />
+                </Box>
+            </Modal>
+            {/* Add Image Modal */}
+
+            {/* Add Video Link Modal */}
+            <Modal
+                open={openVideoLinkModal}
+                onClose={handleCloseVideoLinkModal}
                 aria-labelledby="modal-modal-title"
                 aria-describedby="modal-modal-description"
                 className="create-event-popup-modal"
             >
                 <Box sx={style}>
-                    <AddVideoLinkModal handleClose={handleClose} videoLinkArr={videoLinkArr} setVideoLinkArr={setVideoLinkArr} />
+                    <AddVideoLinkModal
+                        handleCloseVideoLinkModal={handleCloseVideoLinkModal}
+                        videoLinkArr={videoLinkArr}
+                        setVideoLinkArr={setVideoLinkArr}
+                    />
                 </Box>
             </Modal>
+            {/* Add Video Link Modal */}
         </div >
     )
 }

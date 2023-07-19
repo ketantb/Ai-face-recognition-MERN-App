@@ -153,6 +153,10 @@
     justify-content: center;
 } 
 
+.event-form-main-container>.rb>div:first-child > button{
+    margin-top: 5px;
+}
+
 .event-form-main-container>.rb>div>div>section{
 }
 
@@ -173,10 +177,14 @@
 
 .cover-pic-preview-image-dustbinIcon{
     position: absolute;
-    top: 50%;
-    left: 50%;
-    color: red;
+    top: 0%;
+    left: 0%;
+    color: black;
     cursor: pointer;
+}
+
+.cover-pic-preview-image-dustbinIcon > input{
+    width: 100%;
 }
 
 .event-form-edit-textarea{
@@ -214,4 +222,10 @@
 .delete-event-btn-wrapper{
     text-align: center;
     margin-top: 10px;
+}
+
+.add-images-popup-modal{
+    margin: auto;
+    width: 75%;
+    height: 75%;
 }

@@ -5,13 +5,9 @@ const eventSchema = new mongoose.Schema({
     eventDate: { type: String },
     eventDescription: { type: String },
     eventCoverPage: { type: String },
-    eventImages: [
-        {
-            image: { type: String },
-            published: { type: Boolean, default: false },
-        }
-    ],
-    eventVideoLinks: []
+    eventImages: [],
+    eventVideoLinks: [],
+    published: { type: Boolean, default: false },
 })
 
 const EventModel = mongoose.model('event', eventSchema)

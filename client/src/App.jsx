@@ -2,6 +2,7 @@ import './App.css';
 import { Routes, Route } from 'react-router-dom'
 import { store } from './store'
 import { Provider } from 'react-redux';
+import { Toaster } from "react-hot-toast";
 import AppNavbar from './components/app-navbar/AppNavbar';
 import Signin from './components/signin/Signin';
 import DashBoardDetails from './components/dashboard-details/DashBoardDetails';
@@ -14,6 +15,7 @@ import EventFormPage from './components/event-form-page/event-form-page';
 function App() {
   return (
     <Provider store={store}>
+      <Toaster position="top-center" reverseOrder={false} />
       <AppNavbar />
       <div style={{ marginTop: '5rem' }}>
         <Routes>

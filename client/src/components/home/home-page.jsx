@@ -4,8 +4,10 @@ import { FiSettings } from 'react-icons/fi';
 import { BsCalendar4Event } from 'react-icons/bs';
 import { Modal, Box } from "@mui/material";
 import CreateEventPopup from './create-event/create-event-pop-up';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import axios from '../../helpers/axios'
+import AllEventContainer from './event-card-container/allEventContainer';
 
 const HomePage = () => {
     const navigate = useNavigate()
@@ -24,6 +26,22 @@ const HomePage = () => {
     const [open, setOpen] = useState(false);
     const handleOpen = () => setOpen(true);
     const handleClose = () => setOpen(false);
+    const [allEvents, setAllEvents] = useState();
+
+    const getAllEvents = async () => {
+        await axios.get('/all-events')
+            .then((res) => {
+                console.log("all events => ", res.data.message)
+                setAllEvents(res.data.message)
+            })
+            .catch((err) => {
+                console.log(err)
+            })
+    }
+
+    useEffect(() => {
+        getAllEvents();
+    }, [])
 
     return (
         <div className="home-page-container">
@@ -37,7 +55,7 @@ const HomePage = () => {
                     </button>
                 </div>
                 <div className='home-page-header-rb'>
-                    <button onClick={()=> navigate('/dashboard-details')}>
+                    <button onClick={() => navigate('/dashboard-details')}>
                         <span><FiSettings /></span>
                         <span>Dashboard Settings</span>
                     </button>
@@ -49,14 +67,14 @@ const HomePage = () => {
                         <button>SHOW ALL</button>
                     </section>
                     <section>
-                        <button>UNPUBLISHED IMAGES</button>
+                        <button>PUBLISHED EVENTS</button>
                     </section>
                     <section>
-                        <button>VIDEOS</button>
+                        <button>UNPUBLISHED EVENTS</button>
                     </section>
                 </div>
                 <div className='home-page-main-data-container'>
-
+                    <AllEventContainer allEvents={allEvents}/>
                 </div>
             </main>
             <Modal
@@ -67,7 +85,7 @@ const HomePage = () => {
                 className="create-event-popup-modal"
             >
                 <Box sx={style}>
-                    <CreateEventPopup handleClose={handleClose}/>
+                    <CreateEventPopup handleClose={handleClose} getAllEvents={getAllEvents} />
                 </Box>
             </Modal>
         </div>

@@ -122,9 +122,11 @@ const EventFormPage = () => {
                             </div>
                             :  */}
                         <ul className='images-list'>
-                            {data.map((el, idx) => {
+                            {eventData?.eventImages?.map((image, idx) => {
                                 return (
-                                    <li><img src={dummyImg} /></li>
+                                    <li key={idx}>
+                                        <img src={image} />
+                                    </li>
                                 )
                             })}
                         </ul>
@@ -209,6 +211,8 @@ const EventFormPage = () => {
                         handleCloseVideoLinkModal={handleCloseVideoLinkModal}
                         videoLinkArr={videoLinkArr}
                         setVideoLinkArr={setVideoLinkArr}
+                        getEventDetails={getEventDetails}
+                        eventData={eventData}
                     />
                 </Box>
             </Modal>

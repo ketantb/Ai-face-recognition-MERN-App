@@ -65,19 +65,56 @@ router.patch('/update-event-images/:eventId', async (req, res) => {
     // console.log("eventId => ", eventId)
     console.log(req.body)
     try {
-        const patchImagesArr = await Event.findByIdAndUpdate(eventId, 
-                                                            { eventImages: newArray }, 
-                                                            { new: true }) // {new: true } added To return the updated document
+        const patchImagesArr = await Event.findByIdAndUpdate(eventId,
+            { eventImages: newArray },
+            { new: true }) // {new: true } added To return the updated document
         if (!patchImagesArr) {
             return res.status(404).json({ message: 'Item not found' });
         }
         console.log(patchImagesArr)
-        return res.json({success: true, ...patchImagesArr});
+        return res.json({ success: true, ...patchImagesArr });
     }
     catch (error) {
         console.error('Error updating array:', error);
         res.status(500).json({ message: 'Server error' });
     }
 })
+
+router.patch('/update-video-links/:eventId', async (req, res) => {
+    const { eventId } = req.params
+    const newArray = req.body
+    console.log(newArray)
+    try {
+        const patchVideoLinkArr = await Event.findByIdAndUpdate(eventId,
+            { eventVideoLinks: newArray },
+            { new: true }) // {new: true } added To return the updated document
+        if (!patchVideoLinkArr) {
+            return res.status(404).json({ message: 'Item not found' });
+        }
+        console.log(patchVideoLinkArr)
+        return res.json({ success: true, ...patchVideoLinkArr });
+    }
+    catch (error) {
+        console.error('Error updating array:', error);
+        res.status(500).json({ message: 'Server error' });
+    }
+})
+
+
+// router.get('/get-video-links/:eventId', async (req, res) => {
+//     const eventId = req.params
+//     try {
+//         const videoLinkArray = await Event.findById(eventId);
+//         if (!videoLinkArray) {
+//             return res.status(404).json({ message: 'Item not found' });
+//         }
+//         console.log(videoLinkArray)
+//         return res.json({ success: true, ...videoLinkArray });
+//     }
+//     catch (error) {
+//         console.error('Error finding videoLinkArray:', error);
+//         res.status(500).json({ message: 'Server error' });
+//     }
+// })
 
 module.exports = router;

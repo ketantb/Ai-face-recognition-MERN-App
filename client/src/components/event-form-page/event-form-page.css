@@ -79,9 +79,9 @@
     padding: 1rem;
     height: 60vh;
     margin: 2rem;
-    display: flex;
+    /* display: flex;
     justify-content: center;
-    align-items: center;
+    align-items: center; */
 }
 
 .event-form-page-main-data-container > .dummy-text{

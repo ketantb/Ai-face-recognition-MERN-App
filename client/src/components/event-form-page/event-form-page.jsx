@@ -12,6 +12,8 @@ import { useSelector } from 'react-redux';
 import axios from '../../helpers/axios'
 import { useParams } from 'react-router-dom';
 import AddImageModal from './add-image-modal/add-image-modal';
+import AllImagesContainer from './all-images-container/all-images-container';
+import AllVideosContainer from './all-videos-container/all-videos-container';
 
 const EventFormPage = () => {
     //use params
@@ -121,7 +123,7 @@ const EventFormPage = () => {
                                 <p>Maximum upload per file size: 20MB</p>
                             </div>
                             :  */}
-                        <ul className='images-list'>
+                        {/* <ul className='images-list'>
                             {eventData?.eventImages?.map((image, idx) => {
                                 return (
                                     <li key={idx}>
@@ -129,7 +131,9 @@ const EventFormPage = () => {
                                     </li>
                                 )
                             })}
-                        </ul>
+                        </ul> */}
+                        <AllVideosContainer eventData={eventData} getEventDetails={getEventDetails} />
+                        {/* <AllImagesContainer eventData={eventData} /> */}
                         {/* } */}
                     </div>
                 </section>

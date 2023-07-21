@@ -100,6 +100,17 @@ router.patch('/update-video-links/:eventId', async (req, res) => {
     }
 })
 
+// router.get("/get-video-links", async (req, res) => {
+//     eventVideoLinks = "facebook.com"
+//     try{
+//         const videoLinkArray = await Event.find({"eventVideoLinks": {$exists: true}})
+//         res.send(videoLinkArray)
+//         console.log(videoLinkArray)
+//     }
+//     catch(err){
+//         console.log(err)
+//     }
+// })
 
 // router.get('/get-video-links/:eventId', async (req, res) => {
 //     const eventId = req.params

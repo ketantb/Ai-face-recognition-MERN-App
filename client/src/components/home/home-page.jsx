@@ -27,6 +27,7 @@ const HomePage = () => {
     const handleOpen = () => setOpen(true);
     const handleClose = () => setOpen(false);
     const [allEvents, setAllEvents] = useState();
+    const [eventRendering, setEventRendering] = useState('allEvents')
 
     const getAllEvents = async () => {
         await axios.get('/all-events')
@@ -64,31 +65,46 @@ const HomePage = () => {
             <main>
                 <div className='home-page-main-button-container'>
                     <section>
-                        <button>SHOW ALL</button>
+                        <button 
+                        onClick={() => setEventRendering('allEvents')}
+                        style={{backgroundColor : eventRendering == 'allEvents' ? '#f0f0f0' : 'transparent'}}
+                        >
+                            SHOW ALL
+                        </button>
                     </section>
                     <section>
-                        <button>PUBLISHED EVENTS</button>
+                        <button
+                        onClick={() => setEventRendering('publishedEvents')}
+                        style={{backgroundColor : eventRendering == 'publishedEvents' ? '#f0f0f0' : 'transparent'}}
+                        >
+                            PUBLISHED EVENTS
+                        </button>
                     </section>
                     <section>
-                        <button>UNPUBLISHED EVENTS</button>
+                        <button 
+                        onClick={() => setEventRendering('unpublishedEvents')}
+                        style={{backgroundColor : eventRendering == 'unpublishedEvents' ? '#f0f0f0' : 'transparent'}}
+                        >
+                            UNPUBLISHED EVENTS
+                        </button>
                     </section>
                 </div>
                 <div className='home-page-main-data-container'>
-                    <AllEventContainer allEvents={allEvents}/>
+                    <AllEventContainer allEvents={allEvents} eventRendering={eventRendering}/>
                 </div>
-            </main>
-            <Modal
-                open={open}
-                onClose={handleClose}
-                aria-labelledby="modal-modal-title"
-                aria-describedby="modal-modal-description"
-                className="create-event-popup-modal"
-            >
-                <Box sx={style}>
-                    <CreateEventPopup handleClose={handleClose} getAllEvents={getAllEvents} />
-                </Box>
-            </Modal>
-        </div>
+            </main >
+    <Modal
+        open={open}
+        onClose={handleClose}
+        aria-labelledby="modal-modal-title"
+        aria-describedby="modal-modal-description"
+        className="create-event-popup-modal"
+    >
+        <Box sx={style}>
+            <CreateEventPopup handleClose={handleClose} getAllEvents={getAllEvents} />
+        </Box>
+    </Modal>
+        </div >
     )
 }
 

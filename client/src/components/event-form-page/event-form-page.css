@@ -95,7 +95,7 @@
     color: rgb(134, 134, 134);
 }
 
-.event-form-page-main-data-container > .images-list{
+.event-form-page-main-data-container > section > .images-list{
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
@@ -105,11 +105,11 @@
     overflow-y: auto;
 }
 
-.event-form-page-main-data-container > .images-list > li{
+.event-form-page-main-data-container > section > .images-list > li{
     list-style: none;
 }
 
-.event-form-page-main-data-container > .images-list > li > img{
+.event-form-page-main-data-container > section > .images-list > li > img{
     width: 200px;
     height: 150px;
 }

@@ -4,7 +4,6 @@ import { CiEdit } from 'react-icons/ci';
 import { ImBin } from 'react-icons/im';
 import { useEffect, useState } from 'react';
 import { AiOutlineCloudUpload } from 'react-icons/ai';
-import { data } from './configs'
 import dummyImg from '../../assets/fr-gallery-dummyimg.jpg'
 import { Modal, Box } from "@mui/material";
 import AddVideoLinkModal from './add-video-link-modal/add-video-link-modal';
@@ -14,6 +13,8 @@ import { useParams } from 'react-router-dom';
 import AddImageModal from './add-image-modal/add-image-modal';
 import AllImagesContainer from './all-images-container/all-images-container';
 import AllVideosContainer from './all-videos-container/all-videos-container';
+import UnpublishedImagesContainer from './unpublished-images-container/unpublished-images-container';
+import { toast } from 'react-hot-toast';
 
 const EventFormPage = () => {
     //use params
@@ -21,6 +22,8 @@ const EventFormPage = () => {
     console.log(eventName, eventId)
     const { createEventData } = useSelector((store) => store.eventPopUP)
     // console.log(createEventData)
+
+    const [containerRendering, setContainerRendering] = useState('allImages')
 
     const [eventData, setEventData] = useState()
 
@@ -39,6 +42,23 @@ const EventFormPage = () => {
         await axios.put(`/edit-event-details/${eventName}/${eventId}`)
             .then((res) => {
                 console.log(res)
+            })
+            .catch((err) => {
+                console.log(err)
+            })
+    }
+
+    const publishEvent = (eventData) => {
+        if (eventData.published == true) {
+            return toast.error('event has already been published !')
+        }
+        axios.patch(`/update-event-publish/${eventId}`)
+            .then((res) => {
+                console.log(res)
+                if (res.data.success) {
+                    toast.success('event updated to published')
+                    getEventDetails()
+                }
             })
             .catch((err) => {
                 console.log(err)
@@ -106,13 +126,28 @@ const EventFormPage = () => {
                 <section className='lb'>
                     <div className='event-form-page-main-button-container'>
                         <section>
-                            <button>SHOW ALL</button>
+                            <button
+                                style={{ backgroundColor: containerRendering == 'allImages' ? '#f0f0f0' : 'transparent' }}
+                                onClick={() => setContainerRendering('allImages')}
+                            >
+                                SHOW ALL
+                            </button>
                         </section>
                         <section>
-                            <button>UNPUBLISHED IMAGES</button>
+                            <button
+                                onClick={() => setContainerRendering('unpublishedImages')}
+                                style={{ backgroundColor: containerRendering == 'unpublishedImages' ? '#f0f0f0' : 'transparent' }}
+                            >
+                                UNPUBLISHED IMAGES
+                            </button>
                         </section>
                         <section>
-                            <button>VIDEOS</button>
+                            <button
+                                onClick={() => setContainerRendering('videos')}
+                                style={{ backgroundColor: containerRendering == 'videos' ? '#f0f0f0' : 'transparent' }}
+                            >
+                                VIDEOS
+                            </button>
                         </section>
                     </div>
                     <div className='event-form-page-main-data-container'>
@@ -132,9 +167,15 @@ const EventFormPage = () => {
                                 )
                             })}
                         </ul> */}
-                        <AllVideosContainer eventData={eventData} getEventDetails={getEventDetails} />
-                        {/* <AllImagesContainer eventData={eventData} /> */}
-                        {/* } */}
+                        <section style={{ display: containerRendering == 'allImages' ? 'block' : 'none' }}>
+                            <AllImagesContainer eventData={eventData} />
+                        </section>
+                        <section style={{ display: containerRendering == 'unpublishedImages' ? 'block' : 'none' }}>
+                            <UnpublishedImagesContainer eventData={eventData} />
+                        </section>
+                        <section style={{ display: containerRendering == 'videos' ? 'block' : 'none' }}>
+                            <AllVideosContainer eventData={eventData} getEventDetails={getEventDetails} />
+                        </section>
                     </div>
                 </section>
                 <section className='rb'>
@@ -169,7 +210,7 @@ const EventFormPage = () => {
                             <button className='rounded-btns'>
                                 Preview
                             </button>
-                            <button className='rounded-btns'>
+                            <button className='rounded-btns' onClick={() => publishEvent(eventData)}>
                                 Publish
                             </button>
                         </div>

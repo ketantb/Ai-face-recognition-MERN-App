@@ -100,6 +100,26 @@ router.patch('/update-video-links/:eventId', async (req, res) => {
     }
 })
 
+
+router.patch('/update-event-publish/:eventId', async (req, res) => {
+    const { eventId } = req.params
+    try {
+        const publishedEvent = await Event.findByIdAndUpdate(eventId,
+            { published: true },
+            { new: true }) // {new: true } added To return the updated document
+        if (!publishedEvent) {
+            return res.status(404).json({ message: 'Item not found' });
+        }
+        console.log(publishedEvent)
+        return res.json({ success: true, ...publishedEvent });
+    }
+    catch (error) {
+        console.error('Error updating array:', error);
+        res.status(500).json({ message: 'Server error' });
+    }
+})
+
+
 // router.get("/get-video-links", async (req, res) => {
 //     eventVideoLinks = "facebook.com"
 //     try{

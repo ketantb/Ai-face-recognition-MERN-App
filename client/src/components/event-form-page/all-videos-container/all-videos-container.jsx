@@ -42,7 +42,9 @@ const AllVideosContainer = ({ eventData, getEventDetails }) => {
                                     {videoLink}
                                 </td>
                                 <td>
-                                    <ImBin onClick={() => deleteVideoLink(eventData.eventVideoLinks, idx)} />
+                                    <button className='delete-video-link-btn'>
+                                        <ImBin onClick={() => deleteVideoLink(eventData.eventVideoLinks, idx)} />
+                                    </button>
                                 </td>
                             </tr>
                         )

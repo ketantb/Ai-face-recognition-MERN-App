@@ -14,7 +14,11 @@ const AddImageModal = ({
     const [uploadToDB, setUploadToDB] = useState(false)
 
     const handleImages = (e) => {
-        setImgArr([...imgArr, e.target.files[0]])
+        setImgArr([...e.target.files])
+    }
+
+    for (let i = 0; i < imgArr.length; i++) {
+        console.log(`imgArr[${i}] => `, URL.createObjectURL(imgArr[i]))
     }
 
     const uploadImages = async () => {
@@ -29,7 +33,8 @@ const AddImageModal = ({
             imgData.append("upload_preset", "ketanInstaClone")
             await axios.post("https://api.cloudinary.com/v1_1/ketantb/image/upload", imgData)
                 .then((res) => {
-                    arr.push(res.data.url)
+                    arr.push({ published: false, image: res.data.url })
+                    // arr.push(res.data.url)
                 })
                 .catch((err) => {
                     console.log(err)
@@ -66,7 +71,7 @@ const AddImageModal = ({
     return (
         <div className='add-image-container'>
             <section>
-                <input type='file' onChange={handleImages} />
+                <input type='file' multiple onChange={handleImages} />
             </section>
             <section>
                 {imgArr.length ?

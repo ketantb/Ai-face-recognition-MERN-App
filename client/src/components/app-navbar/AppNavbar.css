@@ -13,6 +13,9 @@
     /* margin-top: 1rem; */
 }
 
+.appnavbar-wrapper h5:first-child{
+    cursor: pointer;
+}
 
 .appnavbar-wrapper h5 {
     color: #ffff;

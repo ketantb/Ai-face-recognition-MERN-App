@@ -119,7 +119,6 @@ router.patch('/update-event-publish/:eventId', async (req, res) => {
     }
 })
 
-
 // router.get("/get-video-links", async (req, res) => {
 //     eventVideoLinks = "facebook.com"
 //     try{

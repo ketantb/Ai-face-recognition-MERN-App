@@ -9,7 +9,8 @@ const AddImageModal = ({
     setImgArr,
     imgLinkArr,
     setImgLinkArr,
-    eventData }) => {
+    eventData,
+    getEventDetails }) => {
 
     const [uploadToDB, setUploadToDB] = useState(false)
 
@@ -55,7 +56,9 @@ const AddImageModal = ({
                 if (res.data.success) {
                     setImgArr([])
                     setUploadToDB(false)
+                    getEventDetails()
                     handleCloseAddImagesModal()
+                    
                 }
             })
             .catch((err) => {

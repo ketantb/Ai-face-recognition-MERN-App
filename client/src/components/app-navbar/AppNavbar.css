@@ -13,9 +13,7 @@
     /* margin-top: 1rem; */
 }
 
-.appnavbar-wrapper h5:first-child{
-    cursor: pointer;
-}
+
 
 .appnavbar-wrapper h5 {
     color: #ffff;
@@ -55,6 +53,7 @@
     border-radius: 50%;
     font-size: 1.5rem;
     padding: 0.1rem 0.5rem 0.5rem 0.5rem;
+    
 }
 
 .appbar-hamburger-icon{

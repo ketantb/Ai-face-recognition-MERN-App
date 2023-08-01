@@ -8,13 +8,13 @@ const AppNavbar = () => {
   const navigate = useNavigate()
   return (
     <div className='appnavbar-wrapper'>
-      <h5 onClick={() => navigate('/home-page')}>
+      <h5>
         HAYAT MART
       </h5>
       <h6>Ai Face Recognition gallery</h6>
       <section className='appbar-right-side-icons'>
         <p>
-          <span style={{ backgroundColor: '#1f282f' }} className='appbar-home-icon' onClick={() => navigate('/home-page')}>
+          <span style={{ backgroundColor: '#1f282f' }} className='appbar-home-icon'>
             <FaHome />
           </span>
         </p>

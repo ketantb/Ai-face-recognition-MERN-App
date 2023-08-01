@@ -15,6 +15,7 @@ import AllImagesContainer from './all-images-container/all-images-container';
 import AllVideosContainer from './all-videos-container/all-videos-container';
 import UnpublishedImagesContainer from './unpublished-images-container/unpublished-images-container';
 import { toast } from 'react-hot-toast';
+import ImagesCorousal from './unpublished-images-container/images-corousal/images-corousal';
 
 const EventFormPage = () => {
     //use params
@@ -76,6 +77,13 @@ const EventFormPage = () => {
         boxShadow: 'inset 1px 1px 5px -1px rgba(0,0,0,0.5)',
         p: 4,
     };
+
+
+    const [imagesCorousalArr, setImagesCorousalArr] = useState([])
+    const [imageIndex, setImageIndex] = useState()
+    const [openImagesCorousalModal, setOpenImagesCorousalModal] = useState(false);
+    const handleOpenImagesCorousalModal = () => setOpenImagesCorousalModal(true);
+    const handleCloseImagesCorousalModal = () => setOpenImagesCorousalModal(false);
 
     const [videoLinkArr, setVideoLinkArr] = useState([])
     console.log(videoLinkArr)
@@ -168,10 +176,10 @@ const EventFormPage = () => {
                             })}
                         </ul> */}
                         <section style={{ display: containerRendering == 'allImages' ? 'block' : 'none' }}>
-                            <AllImagesContainer eventData={eventData} />
+                            <AllImagesContainer eventData={eventData} setOpenImagesCorousalModal={setOpenImagesCorousalModal} />
                         </section>
                         <section style={{ display: containerRendering == 'unpublishedImages' ? 'block' : 'none' }}>
-                            <UnpublishedImagesContainer eventData={eventData} />
+                            <UnpublishedImagesContainer eventData={eventData} getEventDetails={getEventDetails} />
                         </section>
                         <section style={{ display: containerRendering == 'videos' ? 'block' : 'none' }}>
                             <AllVideosContainer eventData={eventData} getEventDetails={getEventDetails} />
@@ -238,6 +246,7 @@ const EventFormPage = () => {
                         imgLinkArr={imgLinkArr}
                         setImgLinkArr={setImgLinkArr}
                         eventData={eventData}
+                        getEventDetails={getEventDetails}
                     />
                 </Box>
             </Modal>
@@ -262,6 +271,28 @@ const EventFormPage = () => {
                 </Box>
             </Modal>
             {/* Add Video Link Modal */}
+
+            {/* Images Corousal Modal */}
+            <Modal
+                open={openImagesCorousalModal}
+                onClose={handleCloseImagesCorousalModal}
+                aria-labelledby="modal-modal-title"
+                aria-describedby="modal-modal-description"
+                className="create-event-popup-modal"
+            >
+                <Box sx={style}>
+                    <ImagesCorousal
+                        handleCloseImagesCorousalModal={handleCloseImagesCorousalModal}
+                        imagesCorousalArr={imagesCorousalArr}
+                        setImagesCorousalArr={setImagesCorousalArr}
+                        getEventDetails={getEventDetails}
+                        eventData={eventData}
+                        imageIndex={imageIndex}
+                        setImageIndex={setImageIndex}
+                    />
+                </Box>
+            </Modal>
+            {/* Images Corousal Modal */}
         </div >
     )
 }

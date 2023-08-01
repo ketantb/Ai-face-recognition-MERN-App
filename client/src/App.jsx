@@ -20,7 +20,7 @@ function App() {
       <div style={{ marginTop: '5rem' }}>
         <Routes>
           <Route path='/' element={<Signin />} />
-          <Route path='home-page' element={<HomePage />} />
+          <Route path='/home-page' element={<HomePage />} />
           <Route path='/dashboard-details' element={<DashBoardDetails />} />
           <Route path='/watermaker-setup' element={<SetupWatermark />} />
           <Route path='/gallary/:id' element={<Gallary />} />

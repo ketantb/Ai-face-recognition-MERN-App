@@ -84,7 +84,7 @@
     align-items: center; */
 }
 
-.event-form-page-main-data-container > .dummy-text{
+.event-form-page-main-data-container>.dummy-text {
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -95,7 +95,7 @@
     color: rgb(134, 134, 134);
 }
 
-.event-form-page-main-data-container > section > .images-list{
+.event-form-page-main-data-container>section>.images-list{
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
@@ -105,16 +105,17 @@
     overflow-y: auto;
 }
 
-.event-form-page-main-data-container > section > .images-list > li{
+.event-form-page-main-data-container>section>.images-list>li {
     list-style: none;
+    position: relative;
 }
 
-.event-form-page-main-data-container > section > .images-list > li > img{
+.event-form-page-main-data-container>section>.images-list>li>div>img {
     width: 200px;
     height: 150px;
 }
 
-.cloud-upload-icon{
+.cloud-upload-icon {
     font-size: 56px;
 }
 
@@ -150,34 +151,33 @@
     -moz-box-shadow: 1px 6px 5px 1px rgba(75, 75, 75, 0.75);
 }
 
-.event-form-main-container>.rb>div:first-child>div>section{
+.event-form-main-container>.rb>div:first-child>div>section {
     display: flex;
     justify-content: center;
-} 
+}
 
-.event-form-main-container>.rb>div:first-child > button{
+.event-form-main-container>.rb>div:first-child>button {
     margin-top: 5px;
 }
 
-.event-form-main-container>.rb>div>div>section{
-}
+.event-form-main-container>.rb>div>div>section {}
 
-.cover-pic-preview-image-container{
+.cover-pic-preview-image-container {
     height: 100%;
     width: 100%;
     position: relative;
 }
 
-#cover-pic-input{
+#cover-pic-input {
     /* visibility: hidden; */
 }
 
-.cover-pic-preview-image{
+.cover-pic-preview-image {
     width: 100%;
     height: 100%;
 }
 
-.cover-pic-preview-image-dustbinIcon{
+.cover-pic-preview-image-dustbinIcon {
     position: absolute;
     top: 0%;
     left: 0%;
@@ -185,33 +185,31 @@
     cursor: pointer;
 }
 
-.cover-pic-preview-image-dustbinIcon > input{
+.cover-pic-preview-image-dustbinIcon>input {
     width: 100%;
 }
 
-.event-form-edit-textarea{
+.event-form-edit-textarea {
     width: 100%;
     height: 100%;
     border: none;
     text-align: center;
 }
 
-.event-form-main-container>.rb>div:nth-child(3){
+.event-form-main-container>.rb>div:nth-child(3) {
     display: flex;
     justify-content: space-between;
     padding: 10px;
     border-bottom: 2px solid rgb(134, 134, 134);
 }
 
-.event-form-main-container>.rb>div:nth-child(3)>p:first-child{
+.event-form-main-container>.rb>div:nth-child(3)>p:first-child {}
 
-}
-
-.event-form-main-container>.rb>div:nth-child(3)>p:last-child{
+.event-form-main-container>.rb>div:nth-child(3)>p:last-child {
     font-size: 13px;
 }
 
-.rounded-btns{
+.rounded-btns {
     padding: 0px 15px 5px 15px;
     height: 35px;
     font-weight: 500;
@@ -221,12 +219,12 @@
     cursor: pointer;
 }
 
-.delete-event-btn-wrapper{
+.delete-event-btn-wrapper {
     text-align: center;
     margin-top: 10px;
 }
 
-.add-images-popup-modal{
+.add-images-popup-modal {
     margin: auto;
     width: 75%;
     height: 75%;

@@ -136,6 +136,7 @@ const Signin = () => {
                 </>
             )}
 
+            dont have an account? <span onClick={() => navigate('register-new-user')}>register here</span>
 
         </div >
     )

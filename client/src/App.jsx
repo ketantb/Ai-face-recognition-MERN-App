@@ -11,6 +11,7 @@ import Gallary from './components/gallary/Gallary';
 import FaceRecognitionGallery from './components/face-recognition-gallery/face-recognition-gallery';
 import HomePage from './components/home/home-page';
 import EventFormPage from './components/event-form-page/event-form-page';
+import RegisterUser from './components/register-user/register-user';
 
 function App() {
   return (
@@ -26,6 +27,7 @@ function App() {
           <Route path='/gallary/:id' element={<Gallary />} />
           <Route path='/facerecognitiongallery' element={<FaceRecognitionGallery />} />
           <Route path='/event-form-page/:eventName/:eventId' element={<EventFormPage />} />
+          <Route path='/register-new-user' element={<RegisterUser />} />
         </Routes>
       </div>
     </Provider>

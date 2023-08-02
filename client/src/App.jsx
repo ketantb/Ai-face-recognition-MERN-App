@@ -12,6 +12,7 @@ import FaceRecognitionGallery from './components/face-recognition-gallery/face-r
 import HomePage from './components/home/home-page';
 import EventFormPage from './components/event-form-page/event-form-page';
 import RegisterUser from './components/register-user/register-user';
+import SetPassword from './components/register-user/set-passsword';
 
 function App() {
   return (
@@ -28,6 +29,7 @@ function App() {
           <Route path='/facerecognitiongallery' element={<FaceRecognitionGallery />} />
           <Route path='/event-form-page/:eventName/:eventId' element={<EventFormPage />} />
           <Route path='/register-new-user' element={<RegisterUser />} />
+          <Route path='/set-password' element={<SetPassword />} />
         </Routes>
       </div>
     </Provider>

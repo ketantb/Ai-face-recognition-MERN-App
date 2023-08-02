@@ -24,6 +24,7 @@ const DashBoardDetails = () => {
     //UPLOAD LOGO
     const handleUploadLogo = async () => {
         // navigate('/watermaker-setup')
+        return navigate('/home-page')
         const logoImg = new FormData()
         logoImg.append('file', logo)
         logoImg.append('upload_preset', 'insta_clone')

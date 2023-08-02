@@ -33,6 +33,10 @@
     height: 20rem;
 }
 
+.dont-have-account-option{
+    text-align: center;
+    margin-top: 35px;
+}
 
 .signin-wrapper .form-wrapper .mobilenobtn-wrapper,
 .signin-wrapper .form-wrapper .googlesignin-wrapper {
@@ -53,16 +57,27 @@
     margin-top: 3rem;
 }
 
-.signin-wrapper .form-wrapper .googlesignin-wrapper .btn {
+/* .signin-wrapper .form-wrapper .googlesignin-wrapper .btn {
     background-color: transparent;
     box-shadow: 2px 2px 20px 1px rgb(187, 187, 187);
     border: 1px solid white;
     border-style: inset;
-    color: black;
+    color: #ffff;
+    background-color: rgb(25, 24, 24);
     width: 80%;
     height: 3rem;
     border-radius: 2rem;
     margin-top: 1rem;
+} */
+
+.signin-submit-btn{
+    margin-top: 50px;
+    width: 150px;
+    height: 50px;
+    padding: 5px 10px;
+    border-radius: 5px;
+    color: #ffff;
+    background-color: rgb(25, 24, 24);
 }
 
 .signin-wrapper .form-wrapper .or-line-wrapper .line-wrapper {

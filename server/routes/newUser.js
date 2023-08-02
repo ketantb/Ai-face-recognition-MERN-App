@@ -1,6 +1,8 @@
 require('dotenv').config()
 const router = require('express').Router()
 const { body, validationResult } = require('express-validator')
+const bcrypt = require('bcrypt');
+const jwt = require('jsonwebtoken')
 
 const User = require('../models/user')
 const { response } = require('express')
@@ -67,13 +69,19 @@ router.post('/user-registration', async (req, res) => {
         }
         else {
             const otp = Math.floor(1000 + Math.random() * 9999).toString().substr(0, 4);
-            const userData = { mobileNo, email, otp: otp }
+            let password = req.body.password
+            const saltRounds = 10
+            const salt = await bcrypt.genSalt(saltRounds)
+            const hashedPassword = await bcrypt.hash(password, salt)
+            password = hashedPassword
+            const userData = { mobileNo, email, password, otp: otp }
             const user = await User.create(userData)
             sendOtpMail(email, otp)
             return res.status(200).json({ success: true })
         }
     }
     catch (err) {
+        console.log(err)
         res.status(500).json(err)
     }
 })
@@ -101,6 +109,52 @@ router.post('/verify-otp', async (req, resp) => {
     }
     catch (err) {
         resp.json({ success: false, message: err })
+    }
+})
+
+//SET PASSWORD
+router.post('/set-password', (req, res) => {
+    try {
+        const { password } = req.body
+    }
+    catch (err) {
+        console.log(err)
+    }
+})
+
+
+//sign-in route 
+router.post('/sign-in', async (req, res) => {
+    try {
+        const { email, password } = req.body
+        console.log(email)
+        const userData = await User.findOne({ email: email })
+        console.log('userData => ', userData)
+        if (!userData || email != userData.email) {
+            console.log("Invalid Email or Password")
+            return res.status(400).send("Invalid Email or Password")
+        }
+        if (userData) {
+            const passwordMatch = await bcrypt.compare(password, userData.password)
+            if (passwordMatch) {
+                const dataTobeSentToFrontend = {
+                    _id: userData._id
+                }
+                const token = jwt.sign(dataTobeSentToFrontend, "secretKey", { expiresIn: 10000 })
+
+                res.status(200).send({
+                    success: true,
+                    message: 'Signin Successful',
+                    data: { token }
+                });
+            }
+            else {
+                return res.status(400).send("Invalid Password")
+            }
+        }
+    }
+    catch (err) {
+        console.log(err)
     }
 })
 

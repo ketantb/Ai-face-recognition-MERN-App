@@ -7,7 +7,7 @@ import { useNavigate } from 'react-router-dom';
 
 const RegisterUser = () => {
     const navigate = useNavigate()
-    const [registerForm, setRegisterForm] = useState({ mobileNo: '', email: '' })
+    const [registerForm, setRegisterForm] = useState({ mobileNo: '', email: '', password: '', reEnterPassword: '' })
     const handleRegisterForm = (e) => {
         setRegisterForm({ ...registerForm, [e.target.name]: e.target.value })
         setErr({ email: false, mobile: false })
@@ -15,8 +15,15 @@ const RegisterUser = () => {
     const [err, setErr] = useState({ email: false, mobile: false })
 
     const postRegisterForm = async () => {
+        if (!registerForm.email || !registerForm.mobileNo || !registerForm.password || !registerForm.reEnterPassword) {
+            return toast.error('all the fields are mandatory')
+        }
+        else if (registerForm.password != registerForm.reEnterPassword) {
+            return toast.error('both the passwords are different')
+        }
         await axios.post('/user-registration', registerForm)
             .then((res) => {
+                console.log(res)
                 if (res.data.message == "user found but not verified") {
                     setOtpBox(true)
                 }
@@ -45,7 +52,7 @@ const RegisterUser = () => {
                 console.log(res)
                 if (res.data.message == 'Email verified successfully') {
                     toast.success('Email Verified Successfully!')
-                    navigate("/dashboard-details")
+                    navigate("/")
                 }
             })
             .catch((err) => {
@@ -68,6 +75,15 @@ const RegisterUser = () => {
                     <input name="email" type="email" variant="contained" placeholder="Enter Email Address" className='btn' onChange={handleRegisterForm} />
                 </Box>
                 {err.mobile ? <p>mobile number already in use</p> : null}
+
+                <Box className='mobilenobtn-wrapper'>
+                    <input name='password' type="password" variant="contained" placeholder="Set Password" className='btn' onChange={handleRegisterForm} />
+                </Box>
+                {err.email ? <p>email already in use</p> : null}
+
+                <Box className='googlesignin-wrapper'>
+                    <input name="reEnterPassword" type="password" variant="contained" placeholder="Re-enter Password" className='btn' onChange={handleRegisterForm} />
+                </Box>
 
                 <Button className='register-btn' onClick={postRegisterForm}>
                     NEXT

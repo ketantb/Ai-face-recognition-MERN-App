@@ -27,6 +27,7 @@ const Signin = () => {
             .then((res) => {
                 console.log(res)
                 if (res.data.message == 'Signin Successful') {
+                    localStorage.setItem('token', res.data.token)
                     navigate('/dashboard-details')
                 }
             })

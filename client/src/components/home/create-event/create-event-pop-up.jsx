@@ -11,7 +11,8 @@ import { getCreateEventData } from '../../../store/reducer';
 const CreateEventPopup = ({ handleClose, getAllEvents }) => {
     const navigate = useNavigate()
     const dispatch = useDispatch()
-    const [createEventForm, setCreateEventForm] = useState({ eventName: "", eventDate: "", eventCoverPage: "" })
+    const token = localStorage.getItem('token')
+    const [createEventForm, setCreateEventForm] = useState({ eventName: "", eventDate: "", eventCoverPage: "", })
     const [coverPageURL, setCoverPageURL] = useState()
     const [coverPage, setCoverPage] = useState("")
     const [runPostForm, setRunPostForm] = useState(false)
@@ -50,7 +51,11 @@ const CreateEventPopup = ({ handleClose, getAllEvents }) => {
         console.log(createEventForm)
         // setCoverPageURL(false)
         // return;
-        await axios.post('/create-event', createEventForm)
+        await axios.post('/create-event', createEventForm, {
+            headers: {
+                authorization: token
+            }
+        })
             .then((res) => {
                 if (res.data.success) {
                     const eventName = res.data.message.eventName;

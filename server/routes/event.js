@@ -1,11 +1,16 @@
 const express = require('express')
 const router = express.Router()
+const adminMiddleware = require('../middleware/middleware')
 const Event = require('../models/event')
 
-router.post('/create-event', async (req, res) => {
+router.post('/create-event', adminMiddleware, async (req, res) => {
+    // console.log(req.admin._id)
+    // req.body.adminId = req.admin._id
+    // console.log(req.body)
     try {
         const eventName = req.body.eventName;
         const eventDate = req.body.eventDate;
+        req.body.adminId = req.admin._id
         const newEvent = await Event.create(req.body)
         console.log(newEvent);
         res.status(200).json({ success: true, message: newEvent })
@@ -16,10 +21,11 @@ router.post('/create-event', async (req, res) => {
     }
 })
 
-router.get('/all-events', async (req, res) => {
+router.get('/all-events', adminMiddleware, async (req, res) => {
     try {
-        const allEvents = await Event.find()
-        console.log(allEvents)
+        const adminId = req.admin._id
+        const allEvents = await Event.find({ adminId })
+        // console.log(allEvents)
         res.status(200).json({ success: true, message: allEvents })
     }
     catch (err) {

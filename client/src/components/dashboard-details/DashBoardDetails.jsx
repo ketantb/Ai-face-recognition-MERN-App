@@ -2,10 +2,28 @@ import React, { useEffect, useState } from 'react'
 import './DashBoardDetails.css'
 import { Box, Button, TextField } from '@mui/material'
 import { useNavigate } from 'react-router-dom'
-import axios from 'axios'
+import axios from '../../helpers/axios'
+import { toast } from "react-hot-toast";
 
 const DashBoardDetails = () => {
     const navigate = useNavigate()
+    const token = localStorage.getItem('token')
+    const [companyDetails, setCompanyDetails] = useState()
+
+    const getDashboardDetails = () => {
+        axios.get('/dashboard-details', {
+            headers: {
+                authorization: token
+            }
+        })
+            .then((res) => {
+                console.log(res.data.userData)
+                setCompanyDetails(res.data.userData)
+            })
+            .catch((err) => {
+                console.log(err)
+            })
+    }
 
     const [dashboardData, setDashboardData] = useState({
         companyName: '', contactNo: '', companyEmail: '', socialLink: '',
@@ -24,7 +42,7 @@ const DashBoardDetails = () => {
     //UPLOAD LOGO
     const handleUploadLogo = async () => {
         // navigate('/watermaker-setup')
-        return navigate('/home-page')
+        // return navigate('/home-page')
         const logoImg = new FormData()
         logoImg.append('file', logo)
         logoImg.append('upload_preset', 'insta_clone')
@@ -49,12 +67,16 @@ const DashBoardDetails = () => {
             socialLink: dashboardData.socialLink,
             address: dashboardData.address
         }
-        // console.log('final result', DashBoardDetails)
-        const response = await axios.post('http://localhost:8000/dashboard-details', DashBoardDetails)
+        console.log('final result', DashBoardDetails)
+        const response = await axios.put(`dashboard-details/${companyDetails._id}`, DashBoardDetails, {
+            headers: {
+                authorization: token
+            }
+        })
         if (response.data.success) {
-            console.log(response.data.newEntry._id)
             setDashboardData()
-            navigate(`/gallary/${response.data.newEntry._id}`)
+            toast.success('company dashboard updated successfully')
+            navigate('/home-page')
         }
         else {
             console.log(response)
@@ -68,6 +90,9 @@ const DashBoardDetails = () => {
         // eslint-disable-next-line
     }, [dashboardData.companyLogo])
 
+    useEffect(() => {
+        getDashboardDetails()
+    }, [])
 
     return (
         <div className='dashboard-details-wrappper'>
@@ -87,17 +112,16 @@ const DashBoardDetails = () => {
                         onChange={(e) => setLogo(e.target.files[0])}
                     />
                 </Box>
-                
+
                 <TextField type="number" className="form-control" label="Contact Number"
                     name='contactNo' value={dashboardData.contactNo} onChange={handleInputs} />
 
-                <TextField type="number" className="form-control" label="Office/ Home Address"
+                <TextField className="form-control" label="Office/ Home Address"
                     name='address' value={dashboardData.address} onChange={handleInputs} />
 
-                <Box className='watermark-wrapper'>
+                {/* <Box className='watermark-wrapper'>
                     <div>Watermark</div>
-                    {/* <div>2</div> */}
-                </Box>
+                </Box> */}
 
                 <TextField type="email" className="form-control" label="Company Email"
                     name='companyEmail' value={dashboardData.companyEmail} onChange={handleInputs} />

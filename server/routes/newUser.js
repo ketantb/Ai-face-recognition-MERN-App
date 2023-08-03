@@ -1,8 +1,10 @@
 require('dotenv').config()
 const router = require('express').Router()
 const { body, validationResult } = require('express-validator')
+const adminMiddleware = require('../middleware/middleware')
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken')
+require("dotenv").config();
 
 const User = require('../models/user')
 const { response } = require('express')
@@ -74,7 +76,7 @@ router.post('/user-registration', async (req, res) => {
             const salt = await bcrypt.genSalt(saltRounds)
             const hashedPassword = await bcrypt.hash(password, salt)
             password = hashedPassword
-            const userData = { mobileNo, email, password, otp: otp }
+            const userData = { mobileNo, email, password, otp: otp, companyDashboardDetails: {} }
             const user = await User.create(userData)
             sendOtpMail(email, otp)
             return res.status(200).json({ success: true })
@@ -113,17 +115,17 @@ router.post('/verify-otp', async (req, resp) => {
 })
 
 //SET PASSWORD
-router.post('/set-password', (req, res) => {
-    try {
-        const { password } = req.body
-    }
-    catch (err) {
-        console.log(err)
-    }
-})
+// router.post('/set-password', (req, res) => {
+//     try {
+//         const { password } = req.body
+//     }
+//     catch (err) {
+//         console.log(err)
+//     }
+// })
 
 
-//sign-in route 
+//SIGN-IN ROUTE 
 router.post('/sign-in', async (req, res) => {
     try {
         const { email, password } = req.body
@@ -137,21 +139,46 @@ router.post('/sign-in', async (req, res) => {
         if (userData) {
             const passwordMatch = await bcrypt.compare(password, userData.password)
             if (passwordMatch) {
-                const dataTobeSentToFrontend = {
-                    _id: userData._id
-                }
-                const token = jwt.sign(dataTobeSentToFrontend, "secretKey", { expiresIn: 10000 })
+                const token = jwt.sign({ _id: userData._id }, process.env.SECRET_KEY, { expiresIn: '24h' })
 
                 res.status(200).send({
                     success: true,
                     message: 'Signin Successful',
-                    data: { token }
+                    token
                 });
             }
             else {
                 return res.status(400).send("Invalid Password")
             }
         }
+    }
+    catch (err) {
+        console.log(err)
+    }
+})
+
+//GET DASHBOARD DETAILS
+router.get('/dashboard-details', adminMiddleware, async (req, res) => {
+    console.log("req.admin => ", req.admin)
+    try {
+        const userData = await User.findById({ _id: req.admin._id })
+        console.log(userData)
+        return res.status(200).json({ userData })
+    }
+    catch (err) {
+        console.log(err)
+        return res.status(400).json({ err: err })
+    }
+})
+
+
+router.put('/dashboard-details/:id', adminMiddleware, async (req, res) => {
+    try {
+        const { id } = req.params
+        const dashboardDetails = req.body
+        const dbUpdateUserData = await User.findByIdAndUpdate(
+            id, { companyDashboardDetails: dashboardDetails })
+        return res.status(200).json({ success: true, dbUpdateUserData })
     }
     catch (err) {
         console.log(err)

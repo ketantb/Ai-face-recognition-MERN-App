@@ -8,6 +8,7 @@ const eventSchema = new mongoose.Schema({
     eventImages: [],
     eventVideoLinks: [],
     published: { type: Boolean, default: false },
+    adminId: mongoose.Schema.Types.ObjectId,
 })
 
 const EventModel = mongoose.model('event', eventSchema)

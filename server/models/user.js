@@ -7,14 +7,7 @@ const UserSchema = new mongoose.Schema({
     otp: { type: String },
     isVerified: { type: Boolean, default: false },
     password: { type: String },
-    companyDashboardDetails: {
-        companyName: { type: String },
-        companyLogo: { type: String },
-        contactNumber: { type: String },
-        companyAddress: { type: String },
-        companyEmail: { type: String },
-        companySocialLink: { type: String },
-    }
+    companyDashboardDetails: { type: Object }
 })
 
 const UserModel = mongoose.model('users', UserSchema)

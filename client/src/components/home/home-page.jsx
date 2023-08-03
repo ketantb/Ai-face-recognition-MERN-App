@@ -11,6 +11,7 @@ import AllEventContainer from './event-card-container/allEventContainer';
 
 const HomePage = () => {
     const navigate = useNavigate()
+    const token = localStorage.getItem('token')
     const style = {
         position: "absolute",
         top: "50%",
@@ -30,7 +31,11 @@ const HomePage = () => {
     const [eventRendering, setEventRendering] = useState('allEvents')
 
     const getAllEvents = async () => {
-        await axios.get('/all-events')
+        await axios.get('/all-events', {
+            headers: {
+                authorization: token
+            }
+        })
             .then((res) => {
                 console.log("all events => ", res.data.message)
                 setAllEvents(res.data.message)
@@ -65,45 +70,45 @@ const HomePage = () => {
             <main>
                 <div className='home-page-main-button-container'>
                     <section>
-                        <button 
-                        onClick={() => setEventRendering('allEvents')}
-                        style={{backgroundColor : eventRendering == 'allEvents' ? '#f0f0f0' : 'transparent'}}
+                        <button
+                            onClick={() => setEventRendering('allEvents')}
+                            style={{ backgroundColor: eventRendering == 'allEvents' ? '#f0f0f0' : 'transparent' }}
                         >
                             SHOW ALL
                         </button>
                     </section>
                     <section>
                         <button
-                        onClick={() => setEventRendering('publishedEvents')}
-                        style={{backgroundColor : eventRendering == 'publishedEvents' ? '#f0f0f0' : 'transparent'}}
+                            onClick={() => setEventRendering('publishedEvents')}
+                            style={{ backgroundColor: eventRendering == 'publishedEvents' ? '#f0f0f0' : 'transparent' }}
                         >
                             PUBLISHED EVENTS
                         </button>
                     </section>
                     <section>
-                        <button 
-                        onClick={() => setEventRendering('unpublishedEvents')}
-                        style={{backgroundColor : eventRendering == 'unpublishedEvents' ? '#f0f0f0' : 'transparent'}}
+                        <button
+                            onClick={() => setEventRendering('unpublishedEvents')}
+                            style={{ backgroundColor: eventRendering == 'unpublishedEvents' ? '#f0f0f0' : 'transparent' }}
                         >
                             UNPUBLISHED EVENTS
                         </button>
                     </section>
                 </div>
                 <div className='home-page-main-data-container'>
-                    <AllEventContainer allEvents={allEvents} eventRendering={eventRendering}/>
+                    <AllEventContainer allEvents={allEvents} eventRendering={eventRendering} />
                 </div>
             </main >
-    <Modal
-        open={open}
-        onClose={handleClose}
-        aria-labelledby="modal-modal-title"
-        aria-describedby="modal-modal-description"
-        className="create-event-popup-modal"
-    >
-        <Box sx={style}>
-            <CreateEventPopup handleClose={handleClose} getAllEvents={getAllEvents} />
-        </Box>
-    </Modal>
+            <Modal
+                open={open}
+                onClose={handleClose}
+                aria-labelledby="modal-modal-title"
+                aria-describedby="modal-modal-description"
+                className="create-event-popup-modal"
+            >
+                <Box sx={style}>
+                    <CreateEventPopup handleClose={handleClose} getAllEvents={getAllEvents} />
+                </Box>
+            </Modal>
         </div >
     )
 }
